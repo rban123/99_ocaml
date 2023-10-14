@@ -33,10 +33,23 @@ let rev lst =
     | h :: t -> rev_helper (h :: acc) t
   in rev_helper [] lst
    
-
 (* 6. Palindrome *)
 let is_palindrome lst = 
   lst = rev lst
 
+(* 7. Flatten a List *)
+type 'a node =
+  | One of 'a 
+  | Many of 'a node list
 
 
+let flatten_list lst =
+  let rec aux acc = function
+    | [] -> acc
+    | One h :: t -> aux (h :: acc) t
+    | Many h :: t ->  aux (aux acc h) t
+  in List.rev @@ aux [] lst
+
+
+let lst = [3; 4; 5; 1; 20; 9] in
+let nested_lst = [One "a"; Many [One "b"; Many [One "c"; One "d"]]; One "e"];;
